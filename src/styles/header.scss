@@ -1,0 +1,21 @@
+@import "./home.scss";
+@import "./general.scss";
+.header-nav {
+  @extend .home-nav;
+  top: 0;
+  display: flex;
+  justify-content: start;
+  padding: 10px;
+}
+
+.main-logo {
+  @extend .general-img;
+  height: 100%;
+  max-width: 200px;
+  width: 45%;
+
+  background-image: url("../images/dcschool-main-logo.png");
+}
+.user-name {
+  color: $white-text-color;
+}

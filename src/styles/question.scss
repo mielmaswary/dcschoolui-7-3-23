@@ -1,0 +1,83 @@
+.question-container {
+  background-image: url("../images/course-bg.jpg");
+  background-size: cover;
+  height: 90vh;
+  @media (max-width: 1350px) {
+    height: 100vh;
+  }
+  padding: 20px;
+  @extend .main-container;
+  @extend .general-img;
+
+  .headline {
+    font-size: 35px;
+    color: white;
+  }
+
+  .question-text {
+    font-size: 20px;
+    padding: 10px 10px;
+    text-align: center;
+    color: white;
+  }
+  .answers-container {
+    padding: 20px 8px;
+    .answer {
+      padding: 10px 10px;
+      margin: 8px auto;
+      background-color: #ccc;
+      color: $main-text;
+      min-height: 50px;
+      text-align: center;
+      cursor: pointer;
+      &:hover {
+        background-color: $white-text-color-hover;
+      }
+    }
+  }
+}
+.course-video {
+  width: 85%;
+  height: calc(0.5625 * 85vw);
+  @media (min-width: 1350px) {
+    width: 75%;
+    height: calc(0.5625 * 73vw);
+  }
+
+  @media (min-width: 1550px) {
+    width: 70%;
+    height: calc(0.5625 * 55vw);
+  }
+  @media (max-width: 580px) {
+    width: 95%;
+    height: calc(0.5625 * 95vw);
+  }
+
+  margin: 20px auto;
+}
+
+.feedback {
+  color: $white-text-color;
+
+  text-align: center;
+  font-size: 30px;
+  border: 1px solid wheat;
+  padding: 40px 50px;
+  margin-top: 30px;
+}
+
+.feedback-correct {
+  @extend .feedback;
+  color: $red-alert;
+}
+.feedback-encorrect {
+  @extend .feedback;
+  color: $green-alert;
+}
+.playVideoBtn {
+  width: 100%;
+  max-width: 450px;
+  background-color: black;
+  color: white;
+  margin: auto;
+}

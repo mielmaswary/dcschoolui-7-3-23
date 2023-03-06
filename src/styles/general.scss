@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Alef:wght@400;700&family=Heebo:wght@100&family=Rubik:ital,wght@0,300;0,400;0,700;1,900&display=swap");
+$main-bg-color: #f5f7fb;
+$main-blue-bg: #4d5b9e;
+$mid-blue-bg: #808cc6;
+
+$light-blue-bg: #d6dbf5;
+$green-bg: #65d27c;
+$pink-bg: #f7d9db;
+$red-bg: rgb(177, 21, 21);
+$orange-bg: rgb(219, 109, 13);
+$grey-bg: rgb(53, 48, 48);
+
+$main-text: #2a2830;
+$light-blue-text: #29326487;
+$white-text-color: #f5f7fb;
+$white-text-color-hover: #b7bac1;
+
+$btn-main: #2a2830;
+$btn-hover: #222225;
+$btn-click: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+
+$red-alert: rgb(163, 23, 23);
+$green-alert: green;
+
+$tablet: 795px;
+body {
+  background: rgb(69, 62, 62);
+  background: linear-gradient(
+    90deg,
+    rgba(69, 62, 62, 1) 0%,
+    rgba(78, 73, 73, 1) 51%,
+    rgba(46, 43, 43, 1) 82%,
+    rgba(52, 47, 47, 1) 100%
+  );
+}
+* {
+  margin: 0;
+  padding: 0;
+
+  //font-family: "Alef", sans-serif;
+  // font-family: "Heebo", sans-serif;
+  font-family: "Rubik", sans-serif;
+  direction: rtl;
+  box-sizing: border-box;
+  color: $main-text;
+}
+.white-text {
+  color: $white-text-color;
+}
+.text-align-center {
+  text-align: center;
+}
+.white-link {
+  color: $white-text-color;
+  font-weight: 200px;
+  cursor: pointer;
+  text-decoration: underline;
+  width: 300px;
+  margin: 0 auto;
+  &:hover {
+    color: $white-text-color-hover;
+  }
+}
+.red-alert {
+  color: $red-alert;
+  font-size: 14px !important;
+}
+.sucssess-alert {
+  color: $green-alert;
+  font-size: 25px;
+}
+
+.general-img {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: auto;
+  max-width: 1350px;
+  margin-top: 100px;
+}
+
+button {
+  background-color: $main-text;
+  color: wheat;
+  font-size: 20px;
+  cursor: pointer;
+  min-width: 200px;
+  padding: 15px 30px;
+  &:hover {
+    background-color: $btn-hover;
+  }
+  &:active {
+    box-shadow: $btn-click;
+    font-size: 19px;
+  }
+}
+video {
+  pointer-events: none;
+}
+
+.green-btn {
+  background-color: $green-bg;
+}
+.red-btn {
+  background-color: $red-bg;
+}
+.orange-btn {
+  background-color: $orange-bg;
+}
+.grey-btn {
+  background-color: $grey-bg;
+}
+.disabled-btn {
+  background-color: #ccc;
+  color: $main-text;
+  &:hover {
+    background-color: #ccc;
+    color: $main-text;
+  }
+}
+
+.flex-row-center-center {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

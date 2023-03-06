@@ -1,0 +1,18 @@
+.purchase-form {
+  margin: 8rem auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-width: 570px;
+  width: 90%;
+  .input-text,
+  button {
+    padding: 10px 20px;
+    margin: 5px 0;
+    width: 100%;
+  }
+  label {
+    font-size: 20px;
+    margin-right: 5px;
+  }
+}
