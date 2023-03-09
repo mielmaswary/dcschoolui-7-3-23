@@ -17,12 +17,13 @@ const Home = (props) => {
     setQuestions,
     answers,
     setAnswers,
+    token
   } = useContext(AppContext);
 
   const { rootFetchUrl, rootUrl } = props;
   const [isOverLoadDrivers, setIsOverLoadDrivers] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(true);
-  console.log("🚀 ~ file: Home.js:25 ~ Home ~ isSubscribed:", isSubscribed);
+
   const h2Text = isSubscribed ? "כניסה לקורס" : "רישום נהג חדש";
   const switchBtnText = isSubscribed
     ? "עדיין לא רשום? הוספת נהג חדש"

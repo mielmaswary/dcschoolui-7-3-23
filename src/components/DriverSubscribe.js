@@ -91,7 +91,6 @@ const DriverSubscribe = (props) => {
     e.preventDefault();
     let fetchUrl = `${rootFetchUrl}/drivers`;
     setIsLoadin(true);
-    console.log(formData);
     fetch(fetchUrl, {
       headers: {
         Accept: "application/json",

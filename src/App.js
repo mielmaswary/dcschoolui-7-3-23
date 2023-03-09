@@ -1,11 +1,15 @@
 import "./styles/main.scss";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 import { Routes, Navigate, Route, redirect } from "react-router-dom";
 import Course from "./pages/Course";
 import Home from "./pages/Home";
 import React, { useState, useContext, useEffect, Suspense } from "react";
 import Ooops from "./components/Ooops";
 import ReactLoading from "react-loading";
-
+import { async } from "@firebase/util";
 export const AppContext = React.createContext();
 
 //url settings
@@ -22,6 +26,36 @@ function App() {
   const params = new URLSearchParams(windowUrl);
   const [isQuizTime, setIsQuizTime] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const email = process.env.REACT_APP_EMAIL;
+  console.log("🚀 ~ file: App.js:30 ~ App ~ email:", email)
+  const psw = process.env.REACT_APP_PSW;
+  console.log("🚀 ~ file: App.js:32 ~ App ~ psw:", psw)
+  //firebase auth
+  const [token, setToken] = useState();
+  const firebaseConfig = {
+    apiKey: "AIzaSyBtWNCGeJPgZGB-XpPjHyzav2_Nj1b4OSA",
+    authDomain: "dcschooladminauth.firebaseapp.com",
+    projectId: "dcschooladminauth",
+    storageBucket: "dcschooladminauth.appspot.com",
+    messagingSenderId: "467232741076",
+    appId: "1:467232741076:web:98887dd1682dcbc87d4d41",
+    measurementId: "G-1837KRFH94",
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  useEffect(() => {
+    const login = async () => {
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        psw
+      );
+      const tokenId = await auth.currentUser.accessToken;
+      setToken(tokenId);
+    };
+    login();
+  }, []);
 
   //get company data
   const companyId = params.get("companyId");
@@ -33,12 +67,15 @@ function App() {
     questions: [],
     link: "",
   });
-  console.log("🚀 ~ file: App.js:36 ~ App ~ companyData:", companyData);
   const [isValidCompany, setIsValidCompany] = useState(false);
   useEffect(() => {
     const fetchCompany = async () => {
       setIsLoading(true);
-      const res = await fetch(`${rootFetchUrl}/companies/${companyId}`);
+      const res = await fetch(`${rootFetchUrl}/companies/${companyId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
 
       if (!(companyId.trim() === "") && res.ok) {
         const data = await res.json();
@@ -51,57 +88,80 @@ function App() {
       }
     };
     fetchCompany();
-  }, [companyId]);
+  }, [companyId, token]);
 
   //get company drivers
   const [companyDrivers, setCompanyDrivers] = useState([]);
   useEffect(() => {
     const fetchCompanyDrivers = async () => {
       setIsLoading(true);
-      const res = await fetch(`${rootFetchUrl}/companies/${companyId}/drivers`);
+      const res = await fetch(
+        `${rootFetchUrl}/companies/${companyId}/drivers`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
       const data = await res.json();
       setCompanyDrivers(data);
     };
     fetchCompanyDrivers();
-  }, [companyId]);
+  }, [companyId, token]);
 
   //get driver data
   const driverId = params.get("driverId");
 
   const [driverData, setDriverData] = useState(false);
   useEffect(() => {
-    fetch(`${rootFetchUrl}/drivers/${driverId}`)
+    fetch(`${rootFetchUrl}/drivers/${driverId}`, {
+      headers: {
+        Authorization: token,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setDriverData(data);
       });
-  }, [driverId, isQuizTime]);
+  }, [driverId, isQuizTime, token]);
 
   //get questions data
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
-    fetch(`${rootFetchUrl}/questions?id=${companyData.questions.join("&id=")}`)
+    fetch(
+      `${rootFetchUrl}/questions?id=${companyData?.questions?.join("&id=")}`,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         setQuestions(data);
       });
-  }, [companyData.id, companyData.questions]);
+  }, [companyData.id, companyData.questions, token]);
 
   //get answers data
   const [answers, setAnswers] = useState([]);
   useEffect(() => {
-    fetch(`${rootFetchUrl}/answers`)
+    fetch(`${rootFetchUrl}/answers`, {
+      headers: {
+        Authorization: token,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setAnswers(data);
       });
-  }, [companyData.id, driverData.id, driverData.level]);
+  }, [companyData.id, driverData.id, driverData.level, token]);
 
   //update company drivers
   const companyDriversUpdate = () => {
     const fetchUrl = `${rootFetchUrl}/companies/${companyData.id}`;
     fetch(fetchUrl, {
       headers: {
+        Authorization: token,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -119,6 +179,7 @@ function App() {
     const fetchUrl = `${rootFetchUrl}/drivers/${driverData.id}`;
     fetch(fetchUrl, {
       headers: {
+        Authorization: token,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -141,6 +202,7 @@ function App() {
     const endTime = new Date().toLocaleString();
     fetch(fetchUrl, {
       headers: {
+        Authorization: token,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -162,6 +224,7 @@ function App() {
 
     fetch(fetchUrl, {
       headers: {
+        Authorization: token,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -175,7 +238,7 @@ function App() {
   };
 
   //validition
-  const isFinishCourse = driverData.level >= companyData.questions.length;
+  const isFinishCourse = driverData?.level >= companyData?.questions?.length;
   const isValidDriver = (driverId) => {
     const currentDriver = companyDrivers.find(
       (driver) => driver.id === driverId
@@ -211,6 +274,7 @@ function App() {
                 isQuizTime,
                 setIsQuizTime,
                 driverDateTimeUpdate,
+                token,
               }}
             >
               {isLoading ? (
@@ -260,6 +324,7 @@ function App() {
                 setIsQuizTime,
                 driverDateTimeUpdate,
                 driverMistakesUpdate,
+                token,
               }}
             >
               {!isFullData || isFinishCourse ? (

@@ -16,19 +16,17 @@ const DriverLogin = (props) => {
     setQuestions,
     answers,
     setAnswers,
-    driverDateTimeUpdate
+    driverDateTimeUpdate,
+    token,
   } = useContext(AppContext);
-
+ 
   //form data
   const [formData, setFormData] = useState({
     companyId: companyData.id,
     name: "",
     id: "",
   });
-  console.log(
-    "🚀 ~ file: DriverLogin.js:27 ~ DriverLogin ~ formData",
-    formData
-  );
+
   const [isValidLogin, setIsValidLogin] = useState(true);
   const navigate = useNavigate();
 
@@ -49,7 +47,11 @@ const DriverLogin = (props) => {
     e.preventDefault();
     setIsLoading(true);
     const fetchUrl = `${rootFetchUrl}/drivers/${formData.id}`;
-    fetch(fetchUrl)
+    fetch(fetchUrl, {
+      headers: {
+        Authorization: token,
+      },
+    })
       .then((response) => {
         if (response.status === 404 || formData.id === "") {
           setIsLoading(false);
@@ -61,7 +63,6 @@ const DriverLogin = (props) => {
       })
       .then((data) => {
         if (data) {
-          console.log(data);
           setIsLoading(false);
           const url = `${rootUrl}/course?companyId=${formData.companyId}&driverId=${formData.id}`;
           window.location.href = url;
