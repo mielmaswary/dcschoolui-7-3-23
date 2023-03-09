@@ -27,9 +27,7 @@ function App() {
   const [isQuizTime, setIsQuizTime] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const email = process.env.REACT_APP_EMAIL;
-  console.log("🚀 ~ file: App.js:30 ~ App ~ email:", email)
   const psw = process.env.REACT_APP_PSW;
-  console.log("🚀 ~ file: App.js:32 ~ App ~ psw:", psw)
   //firebase auth
   const [token, setToken] = useState();
   const firebaseConfig = {
