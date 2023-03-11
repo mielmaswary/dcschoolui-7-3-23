@@ -20,6 +20,7 @@ const DriverSubscribe = (props) => {
     setAnswers,
     driverLevelUpdate,
     companyDriversUpdate,
+    token
   } = useContext(AppContext);
 
   //form data
@@ -93,6 +94,7 @@ const DriverSubscribe = (props) => {
     setIsLoadin(true);
     fetch(fetchUrl, {
       headers: {
+        Authorization: token,
         Accept: "application/json",
         "Content-Type": "application/json",
       },

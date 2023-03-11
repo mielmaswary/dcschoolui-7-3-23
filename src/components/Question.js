@@ -22,9 +22,11 @@ const Question = (props) => {
 
   return (
     <div>
-      <h2 style={{ color: "white", textAlign: "center" }}>
-        {levelDisplayed}- {title}
-      </h2>
+      <h4 style={{ color: "white", textAlign: "center" }}>
+        {companyData.questions.length} / {levelDisplayed}
+      </h4>
+      <h2 style={{ color: "white", textAlign: "center" }}>{title}</h2>
+
       {isQuizTime ? (
         <Quiz setIsQuizTime={setIsQuizTime} />
       ) : (
