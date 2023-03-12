@@ -45,7 +45,7 @@ const Video = (props) => {
     >
       <video
         id="video"
-        onPlay={() => setIsQuizTime(true)}
+        onPlay={() => setIsQuizTime(false)}
         onEnded={() => setIsQuizTime(true)}
         controls={false}
         className="course-video"
