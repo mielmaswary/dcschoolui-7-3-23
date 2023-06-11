@@ -13,7 +13,7 @@ import { async } from "@firebase/util";
 export const AppContext = React.createContext();
 
 //url settings
-const dev = false;
+const dev = true;
 const rootFetchUrl = dev
   ? "http://localhost:8000/api"
   : "https://dcschooljsonserverexpress.onrender.com/api";
@@ -31,24 +31,20 @@ function App() {
   //firebase auth
   const [token, setToken] = useState();
   const firebaseConfig = {
-    apiKey: "AIzaSyBtWNCGeJPgZGB-XpPjHyzav2_Nj1b4OSA",
-    authDomain: "dcschooladminauth.firebaseapp.com",
-    projectId: "dcschooladminauth",
-    storageBucket: "dcschooladminauth.appspot.com",
-    messagingSenderId: "467232741076",
-    appId: "1:467232741076:web:98887dd1682dcbc87d4d41",
-    measurementId: "G-1837KRFH94",
+    apiKey: "AIzaSyAGyZC6leibVDbqSEnYH7L-jezGhk6pOwQ",
+    authDomain: "dcschool-4238a.firebaseapp.com",
+    projectId: "dcschool-4238a",
+    storageBucket: "dcschool-4238a.appspot.com",
+    messagingSenderId: "525759891280",
+    appId: "1:525759891280:web:8f9823ab9eb13a2e290e55",
   };
+
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
   useEffect(() => {
     const login = async () => {
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        psw
-      );
+      await signInWithEmailAndPassword(auth, email, psw);
       const tokenId = await auth.currentUser.accessToken;
       setToken(tokenId);
     };
