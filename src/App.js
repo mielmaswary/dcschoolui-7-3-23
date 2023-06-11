@@ -13,7 +13,7 @@ import { async } from "@firebase/util";
 export const AppContext = React.createContext();
 
 //url settings
-const dev = true;
+const dev = false;
 const rootFetchUrl = dev
   ? "http://localhost:8000/api"
   : "https://dcschooljsonserverexpress.onrender.com/api";
